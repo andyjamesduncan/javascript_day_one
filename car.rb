@@ -1,5 +1,7 @@
 class Car
 
+    attr_accessor :car_noise
+
     def initialize(car_noise)
 
         @car_noise = car_noise
@@ -48,3 +50,22 @@ car_array.each do |item|
     item.broom
 end
 
+puts "-----Hash stuff starts here-----"
+
+car_hash = {}
+
+car_hash = sounds.each_with_object({}) do |item, memo|
+    memo[item] = Car.new(item)
+end
+
+sounds.each do |item|
+    car_hash[item].broom
+end
+
+puts "-----Reduce stuff starts here-----"
+
+concatenated_sounds = car_array.reduce("") do |individual_sound, x| 
+    individual_sound + x.car_noise
+end
+
+puts "Concatenated String: #{concatenated_sounds}"
