@@ -1,18 +1,12 @@
 class Car
 
-    # @@number_of_cars = 0
+    def initialize(car_noise)
 
-    def initialize(car_type)
-
-        @car_type = car_type
+        @car_noise = car_noise
 
         car_number = IO.read("carstore.txt").to_i
 
         car_number += 1
-
-        # @@number_of_cars = car_number
-
-        # car_number = car_number.to_s
 
         IO.write("carstore.txt", car_number)
 
@@ -20,17 +14,7 @@ class Car
 
     def broom
 
-        if @car_type == "Ferrari" 
-            puts "Broom!"
-
-        elsif @car_type == "Lamborghini"
-            puts "BROOOOOOMMMM!!!"
-
-        else
-            puts "You need a GOOD car! :-)"
-            puts "Try again..."
-
-        end
+        puts @car_noise
        
     end
 
@@ -44,18 +28,23 @@ end
 
 class RaceCar < Car
 
-    def broom
-        puts "BROOM Race Car"
+    def initialize
+        super("RedBull")
+    end
 
+    def broom
+        puts "RaceCar BROOM"
     end
 
 end
 
-# aCar = Car.new("Ferrari").broom
-# bCar = Car.new("Lamborghini").broom
-# cCar = Car.new("Ford").broom
+sounds = ["Flute", "Violin", "Trombone"]
 
-race_car = RaceCar.new("RedBull").broom
+car_array = sounds.map do |item|
+    Car.new(item)
+end
 
-Car.num_of_cars
+car_array.each do |item|
+    item.broom
+end
 
