@@ -1,3 +1,5 @@
+require 'pry'
+
 class Car
 
     attr_accessor :car_noise
@@ -64,8 +66,18 @@ end
 
 puts "-----Reduce stuff starts here-----"
 
+total = [1, 2, 3].reduce(10) do |sum, x|
+    sum + x
+end
+
+puts "Total: #{total}"
+
+binding.pry
+
 concatenated_sounds = car_array.reduce("") do |individual_sound, x| 
     individual_sound + x.car_noise
 end
+
+binding.pry
 
 puts "Concatenated String: #{concatenated_sounds}"
