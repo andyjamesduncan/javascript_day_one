@@ -1,0 +1,21 @@
+puts "Please write a sample sentence..."
+
+input = gets.chomp
+
+puts "Original Sentence: >#{input}<"
+
+input.gsub!(/[\W]/, " ")
+
+puts "Clean Sentence, without punctuation: >#{input}<"
+
+values = input.split()
+
+puts "Unsorted"
+
+values.each do |element|
+
+    puts "String: #{element}"
+
+end
+
+values.sort!{ |a,b| a.upcase <=> b.upcase}
