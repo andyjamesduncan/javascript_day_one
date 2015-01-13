@@ -1,11 +1,24 @@
+require 'date'
+
 class Blog
 
-	attr_accessor :blog_title, :blog_date, :blog_text, :blog_sponsor
+	attr_accessor :blog_title, 
+		:blog_dy, 
+		:blog_dm, 
+		:blog_dd, 
+		:blog_datetime,
+		:blog_full_date,
+		:blog_text, 
+		:blog_sponsor
 
-	def initialize(blog_title, blog_date, blog_text, blog_sponsor)
+	def initialize(blog_title, blog_dy, blog_dm, blog_dd, blog_text, blog_sponsor)
 
 		@blog_title = "Title: " + blog_title
-		@blog_date =  "Date:  " + blog_date
+		@blog_dy =  blog_dy
+		@blog_dm = blog_dm
+		@blog_dd = blog_dd
+		@blog_datetime = Date.new(blog_dy, blog_dm, blog_dd)
+		@blog_full_date = "Date:  " + blog_dd.to_s + "/" + blog_dm.to_s + "/" + blog_dy.to_s
 		@blog_text =  "Post:  " + blog_text
 		@blog_sponsor = blog_sponsor
 
@@ -32,7 +45,7 @@ class Blog
 
 		print_divider("-", divider_length)
 
-		puts @blog_date
+		puts @blog_full_date
 
 		print_divider("-", divider_length)
 
@@ -72,8 +85,36 @@ end
 
 first_blog_post = Blog.new(
 	"Endless Hypocrisy", 
-	"12th January 2015", 
+	2015, 1, 1, 
 	"David Cameron is a terrible hypocrite",
 	"Goldman Banana")
 
-first_blog_post.front_page
+second_blog_post = Blog.new(
+	"Endless War", 
+	2015, 1, 8, 
+	"Britain Loses War in Afghanistan",
+	"Vampire Squid")
+
+third_blog_post = Blog.new(
+	"Endless Taxes", 
+	2014, 1, 8, 
+	"More Taxes for Less",
+	"Pineapple Sachs")
+
+puts "\nNeat--------\n\n"
+
+post_array = [first_blog_post, second_blog_post, third_blog_post]
+
+sorted_array = 
+	post_array.sort { |a,b|  a.blog_datetime <=> b.blog_datetime }
+
+sorted_array.each do |item|
+	item.front_page
+end
+
+puts "\nOne line--------\n\n"
+
+([	first_blog_post, 
+	second_blog_post, 
+	third_blog_post].sort { |a,b| 	a.blog_datetime <=> 
+									b.blog_datetime }).each{ |item| item.front_page }
