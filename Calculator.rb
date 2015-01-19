@@ -19,7 +19,9 @@ class Calculator
 
 	def subtract(sub1, sub2)
 
-		return sub1 - sub2
+		result = sub1 - sub2
+
+		return ((result * 100).round / 100.0)
 
 	end
 
