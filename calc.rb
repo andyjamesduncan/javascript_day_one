@@ -100,6 +100,13 @@ else
 end
 print "\n"
 
+if calc.multiply(1.6, 2) == 3.2
+	print "OK"
+else
+	print "FAIL"
+end
+print "\n"
+
 print "Testing Calculator divide method: \n"
 if calc.divide(1,0) == :infinity
 	print "OK"
@@ -107,6 +114,8 @@ else
 	print "FAIL"
 end
 print "\n"
+
+# A new feature line
 
 if calc.divide(-1,2) == -0.5
 	print "OK"
