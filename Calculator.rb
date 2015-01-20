@@ -14,20 +14,20 @@ class Calculator
 
 	def add(add1, add2)
 
-		return add1 + add2
+		add1 + add2
 	end
 
 	def subtract(sub1, sub2)
 
 		result = sub1 - sub2
 
-		return ((result * 100).round / 100.0)
+		((result * 100).round / 100.0)
 
 	end
 
 	def multiply(mult1, mult2)
 
-		return mult1 * mult2
+		mult1 * mult2
 
 	end
 
@@ -36,14 +36,10 @@ class Calculator
 		input1 = Float(div1)
 		input2 = Float(div2)
 
-		retvalue = 0.0
-
-		if div2 == 0.0
-			retvalue = :infinity
+		if input2 == 0.0
+			:infinity
 		else
-			retvalue = (input1/input2)
+			(input1/input2)
 		end
- 	
-		return retvalue
 	end
 end
