@@ -49,6 +49,44 @@ describe Numermaster do
 			expect(result).to eq(nil)
 		end
 	end
+	describe "#Fibonacci" do
+		it "Fib -1" do
+			result = @nm.fibonacci(-1)
+			expect(result).to eq(nil)
+		end
+		it "Fib0" do
+			result = @nm.fibonacci(0)
+			expect(result).to eq(nil)
+		end
+		it "Fib1" do
+			result = @nm.fibonacci(1)
+			expect(result).to eq(0)
+		end
+		it "Fib2" do
+			result = @nm.fibonacci(2)
+			expect(result).to eq(1)
+		end
+		it "Fib3" do
+			result = @nm.fibonacci(3)
+			expect(result).to eq(1)
+		end
+		it "Fib4" do
+			result = @nm.fibonacci(4)
+			expect(result).to eq(2)
+		end
+		it "Fib5" do
+			result = @nm.fibonacci(5)
+			expect(result).to eq(3)
+		end
+		it "Fib6" do
+			result = @nm.fibonacci(6)
+			expect(result).to eq(5)
+		end
+		it "Fib7" do
+			result = @nm.fibonacci(7)
+			expect(result).to eq(8)
+		end
+	end
 end
 
 # The second method takes a set of numbers. Then, it should return an array with four values:

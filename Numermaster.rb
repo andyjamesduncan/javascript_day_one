@@ -59,4 +59,18 @@ class Numermaster
 
 		[mode_val, median_val, mean_val, @n_arr.size]
 	end
+
+	def fibonacci(n)
+
+		return nil if n <= 0
+
+		counter = 0
+		
+		return 0 if n == 1
+
+		return 1 if n == 2
+
+		fibonacci(n - 1) + fibonacci(n - 2)
+
+	end
 end
