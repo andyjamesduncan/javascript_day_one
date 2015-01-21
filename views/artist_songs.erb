@@ -1,0 +1,16 @@
+<html>
+  <body>
+    <p>
+     <%= @artist %>
+    </p>
+
+
+    <% if @artist_songs.any? %>
+      <ol>
+        <% @artist_songs.each do |artist_song| %>
+          <li><%= artist_song %></li>
+        <% end %>
+      </ol>
+    <% end %>
+  </body>
+</html>

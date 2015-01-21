@@ -1,0 +1,33 @@
+<html>
+  <body>
+    <p>
+     Search Term
+    </p>
+      <ol>
+          <li><%= @term %></li>
+      </ol>
+    <p>
+     Songs
+    </p>
+
+    <% if @songs.any? %>
+      <ol>
+        <% @songs.each do |song| %>
+          <li><%= song %></li>
+        <% end %>
+      </ol>
+    <% end %>
+
+    <p>
+     Artists
+    </p>
+
+    <% if @artists.any? %>
+      <ol>
+        <% @artists.each do |artists| %>
+          <li><%= artists %></li>
+        <% end %>
+      </ol>
+    <% end %>
+  </body>
+</html>
