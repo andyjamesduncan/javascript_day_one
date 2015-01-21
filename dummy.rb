@@ -22,7 +22,6 @@ class FakeHash
 			return
 
 		else
-			puts @storage_hash[m]
 			return @storage_hash[m]
 		end
 		
