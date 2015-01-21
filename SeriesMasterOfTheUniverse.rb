@@ -40,7 +40,7 @@
 # ============================================================
 
 # Note: if you grab results from Imdb::Search, it will always return a Imdb::Movie object, not Imdb::Serie. In order to get info an Imdb::Serie,
-# which has information like the number of episodes, just use the id to fetch the serie directly:
+# which has information like the number of episodes, just uvi se the id to fetch the serie directly:
 #   dexter_movie = Imdb::Search.new(‘Dexter’).movies.first
 #   dexter_serie = Imdb::Serie.new(dexter_movie.id)
 

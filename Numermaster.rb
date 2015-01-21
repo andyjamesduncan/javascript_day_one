@@ -64,8 +64,6 @@ class Numermaster
 
 		return nil if n <= 0
 
-		counter = 0
-		
 		return 0 if n == 1
 
 		return 1 if n == 2
