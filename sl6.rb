@@ -34,9 +34,6 @@ class Songs
 
 	def add_song(name, artist)
 
-		puts "Name: " + name.to_s
-		puts "Artist: " + artist.to_s
-
 		unless @songs.size >= 12
 
 			@songs.push([name, artist])
