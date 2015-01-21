@@ -34,7 +34,10 @@ class Songs
 
 	def add_song(name, artist)
 
-		unless @songs.size >= 10
+		puts "Name: " + name.to_s
+		puts "Artist: " + artist.to_s
+
+		unless @songs.size >= 12
 
 			@songs.push([name, artist])
 		end
@@ -43,17 +46,25 @@ end
 
 sing_song = Songs.new
 
+sing_song.add_song('Name', 'Artist')
+sing_song.add_song('====', '======')
+
 set :port, 3003
 set :bind, '0.0.0.0'
 
 visits ||= 0
 
 get '/' do
-	sing_song.add_song('Monkey', 'Nuts!')
+	
+	a_var = ""
 
-	a_var = sing_song.songs.to_s
+	sing_song.songs.each do |list_arr|
 
-	"Hello #{var}"
+		a_var += list_arr[0].to_s + ' ' + list_arr[1].to_s + '<br>'
+			
+	end
+
+	"#{a_var}"
 end
 
 get '/enough' do
@@ -61,6 +72,11 @@ get '/enough' do
 end
 
 post '/songs/new' do
-  visits -= 1 if visits > 0
-  true
+
+	if sing_song.songs.size >= 12
+		redirect '/enough'
+	else
+    	sing_song.add_song(params[:artist], params[:name])
+    	redirect '/'
+    end
 end
