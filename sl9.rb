@@ -1,143 +1,108 @@
-# SL9. Spotinatra Premium
+# SL10. The online calculator
 
-# Now we will add some features to our awesome and shiny Spotinatra web app (exercise SL6, if you remember from today):
-# * Instead of adding a song through "curl", we will create a form in the "/" route that allows us to create new song.
-# * Instead of just printing the songs as a string, we will use an ERB template to do that, using the HTML <ul> and <li> elements.
-# * Instead of just printing “ENOUGH”, we will use an ERB template to print an <h1> with “enough”
-# * Instead of saving the songs in an array, we will create a SongList class that has one “add_song” method, which will take an author and a
-# name as parameters, and add the information to the song list.
+# OK, enough TV shows and songs for now. It’s not that we don’t like music, but sometimes you have to stop enjoying awesome stuff, and go to
+# more boring things in order to appreciate them.
 
-# Also, we will have a couple more features:
-# * We will have a dynamic route, like "/artists/:artist" that, for the "artist" parameter, prints all the songs that we have from him/her
-# in our songs list.
-# * We will have a "/search" route that, with a "term" parameter, prints all the artists and the songs which match the "term" parameter.
+# Anyway. We are in the Internet era, so everything goes online. We order stuff online, we watch TV shows online, we buy music online, we even
+# change the world through Twitter… so why not calculating online? Does it make sense? (Einstein silently agrees).
 
-# Enjoy!
+# Decided: we will implement a simple calculator so first grade students can use it from their iPhones while doing their exams. You will think:
+# "but iOS and Android have a built-in calculator! Are you crazy?”. Well, it definitely has, but OURS IS ONLINE!!!
+
+# So, our Online Calculator will:
+# * Have a home page (‘/‘) where you see all four available operations: add, substract, multiply and divide. Pretty simple stuff.
+# * For each one of the available operations, we will have a form with two input fields and a button, which will go to another URL/route and
+# display the result, like “The multiplication of 4 and 15 is 60” or “The addition of 10 and 39 is 49".
+# * There will also be a link, in the home page, that goes to ‘/counting’ and should display the numbers from 1 to 200, one number per line.
+
+# Feel free to add more features! :D
+
 
 require 'sinatra'
 require 'sinatra/reloader'
 
-class Songs
+class Calculator
 
-	attr_accessor :songs
+	attr_accessor :last_result
 
 	def initialize
 
-		@songs = []
+		@last_result = nil
 
 	end
 
-	def get_songs(artist)
+	def add(add1, add2)
 
-		output = []
-
-		@songs.each do |song|
-
-			if song[0].include?(artist)
-
-				output.push(song[1])
-
-			end
-
-		end
-
-		output
+		add1.to_i + add2.to_i
 	end
 
-	def get_songs_by_song(term)
+	def subtract(sub1, sub2)
 
-		output = []
+		result = sub1.to_i - sub2.to_i
 
-		@songs.each do |song|
+		((result * 100).round / 100.0)
 
-			if song[1].include?(term)
-				output.push(song[1])
-			end
-		end
-
-		output
 	end
 
-	def get_artists_by_artist(term)
+	def multiply(mult1, mult2)
 
-		output = []
+		mult1.to_i * mult2.to_i
 
-		@songs.each do |song|
-
-			if song[0].include?(term)
-
-				output.push(song[0])
-
-			end
-
-		end
-
-		output
 	end
 
-	def add_song(name, artist)
+	def divide(div1, div2)
 
-		unless @songs.size >= 12
+		input1 = Float(div1.to_i)
+		input2 = Float(div2.to_i)
 
-			@songs.push([name, artist])
+		if input2 == 0.0
+			:infinity
+		else
+			(input1/input2)
 		end
 	end
 end
 
-sing_song = Songs.new
+calc = Calculator.new
 
-set :port, 3003
+set :port, 3000
 set :bind, '0.0.0.0'
 
-visits ||= 0
-
 get '/' do
-	
-	@songlist = sing_song.songs
-	erb :today
-end
 
-get '/enough' do
-  erb :name
-end
+	@last_result = calc.last_result
+	result = nil
 
-post '/songs/new' do
+	unless(params[:num1].nil?) 
 
-	if sing_song.songs.size >= 12
-		redirect '/enough'
+		if(params[:radio_action] == "add")
+
+			result = calc.add(params[:num1], params[:num2])
+
+		elsif(params[:radio_action] == "subtract")
+
+			result = calc.subtract(params[:num1], params[:num2])
+
+		elsif(params[:radio_action] == "multiply")
+
+			result = calc.multiply(params[:num1], params[:num2])
+
+		elsif(params[:radio_action] == "divide")
+
+			result = calc.divide(params[:num1], params[:num2])
+
+		end
+	end
+
+	if result == :infinity
+		@last_result = "You cannot divide by zero"
 	else
-    	sing_song.add_song(params[:artist], params[:name])
-    	redirect '/'
-    end
-end
+		unless(result.nil?)
+			@last_result = params[:num1].to_s + " " + params[:radio_action].to_s + " " + params[:num2].to_s + " = " + result.to_s
+		end
+	end
 
-get '/artist/:artist' do
+	calc.last_result = @last_result
 
-	@artist = params[:artist]
-
-	@artist_songs = sing_song.get_songs(@artist)
-
-	erb :artist_songs
-
-end
-
-get '/search/:term' do
-
-	@term = params[:term]
-
-	@songs = sing_song.get_songs_by_song(@term)
-
-	@artists = sing_song.get_artists_by_artist(@term)
-
-	erb :songs_and_artists
-end
-
-post '/newsong' do
-
-	if sing_song.songs.size >= 10
-		redirect '/enough'
-	else
-    	sing_song.add_song(params[:artist], params[:name])
-    	redirect '/'
-    end
+	erb :calculator
 end

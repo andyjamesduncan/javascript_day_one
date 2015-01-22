@@ -1,0 +1,38 @@
+<html>
+  <body>
+    <p>
+      <h1>Best calculator in the whole frickin world! :-)</h1>
+    </p>
+
+    <form action="/" method="get">
+      <input name="num1" />
+      <input name="num2" />           
+          <input type = "radio"
+                 name = "radio_action"
+                 value = "add"
+                 checked = "checked" />
+          <label for = "sizeSmall">add</label>
+          
+          <input type = "radio"
+                 name = "radio_action"
+                 value = "subtract" />
+          <label for = "sizeMed">subtract</label>
+ 
+          <input type = "radio"
+                 name = "radio_action"
+                 value = "divide" />
+          <label for = "sizeMed">divide</label>
+          <input type = "radio"
+                 name = "radio_action"
+                 value = "multiply" />
+          <label for = "sizeMed">multiply</label>
+      <input type="submit" />
+    </form>
+
+    <% if @last_result != nil %>
+      <ul>
+          <li><%= @last_result %></li>
+      </ul>
+    <% end %>
+  </body>
+</html>
