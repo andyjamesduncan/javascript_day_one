@@ -60,33 +60,51 @@ end
 
 get '/handle/:handle' do
 
-	@a_message = nil
 	@shoutlist = []
 
-	if(params[:handle].nil?)
-		@a_message = "No handle supplied"
-	else
-		@user = User.find_by handle: params[:handle]
+	@user = User.find_by handle: params[:handle]
 
-		if @user.nil?
-			@a_message = "Cannot find user with handle of " + params[:handle].to_s
-		else
-			@user.shouts.sort { |a, b| b.created_at <=> a.created_at }.each do |shout|
-				@shoutlist.push(	[	shout.user.name.to_s, 
-										shout.user.handle.to_s,
-										shout.message.to_s,
-										shout.created_at.strftime("%H:%M:%S").to_s,
-										shout.likes.to_s
-									]
-								)
-		end
-	end
+	@user.shouts.sort { |a, b| b.created_at <=> a.created_at }.each do |shout|
 
-
+		@shoutlist.push(	[	shout.user.name.to_s, 
+								shout.user.handle.to_s,
+								shout.message.to_s,
+								shout.created_at.strftime("%H:%M:%S").to_s,
+								shout.likes.to_s
+							]
+						)
 	end
 
 	erb :handle_shout
 end
+
+get '/best' do
+
+	@shoutlist = []
+
+	Shout.all.sort { |a, b| b.likes <=> a.likes || a.created_at <=> b.created_at }.each do |shout|
+
+		@shoutlist.push(	[	shout.user.name.to_s, 
+								shout.user.handle.to_s,
+								shout.message.to_s,
+								shout.created_at.strftime("%H:%M:%S").to_s,
+								shout.likes.to_s
+							]
+						)
+	end
+
+	erb :best
+end
+
+get '/like/:shout_id' do
+
+	@shout = Shout.find_by id: params[:shout_id]
+	@shout.likes += 1
+	@shout.save
+
+	redirect '/'
+end
+
 
 get '/' do
 
@@ -118,7 +136,8 @@ get '/' do
 								shout.user.handle.to_s,
 								shout.message.to_s,
 								shout.created_at.strftime("%H:%M:%S").to_s,
-								shout.likes.to_s
+								shout.likes.to_s,
+								shout.id.to_s
 							]
 						)
 	end

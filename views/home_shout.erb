@@ -24,7 +24,7 @@
 
     <% if @shoutlist.any? %>
         <% @shoutlist.each do |sh| %>
-          <%= '<tr><td>' + sh[0] + '</th><td>' + sh[1] + '</td><td>' + sh[2] + '</td><td>' + sh[3] + '</td><td>' + sh[4] +'</td></tr>'  %>
+          <%= '<tr><td>' + sh[0] + '</th><td><form action="/handle/' + sh[1] + '" method="get"><button type="submit">' + sh[1] + '</button></form></td><td>' + sh[2] + '</td><td>' + sh[3] + '</td><td><form action="/like/' + sh[5] + '" method="get"><button type="submit">' + sh[4] + '</button></form></td></tr>'  %>
         <% end %>
     <% end %>
     </table>
