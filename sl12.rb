@@ -1,4 +1,4 @@
-# SL11. Valid students are valid students
+# SL12. Valid students are valid students
 
 # You loved the exampled about students, huh? Let’s student you up then!
 
@@ -23,8 +23,6 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-
-enable :sessions
 
 class Student
 

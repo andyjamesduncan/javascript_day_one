@@ -34,7 +34,7 @@ class Student < ActiveRecord::Base
 
   def not_xavier
     if name =~ /Xavier/i
-      errors.add(name, ' not allowed to be called Xavier')
+      errors.add(name, 'not allowed to be called Xavier')
     end
   end
 end

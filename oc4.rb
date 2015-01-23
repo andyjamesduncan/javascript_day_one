@@ -23,6 +23,8 @@ set :bind, '0.0.0.0'
 
 get '/' do
 
+	@err_message = nil
+
 	unless(params[:name].nil?)
 		student = Student.new
 
@@ -30,10 +32,18 @@ get '/' do
 		student.surnames = params[:surnames]
     	student.website = params[:website]
     	student.number_of_dogs = params[:number_of_dogs]
-#puts "by: " + params[:birth_year].to_params[:birth_month], params[:birth_day])
-    	student.birthday = Date.new(params[:birth_year].to_i, params[:birth_month].to_i, params[:birth_day].to_i)
 
-    	student.save
+    	begin
+    		student.birthday = Date.new(params[:birth_year].to_i, params[:birth_month].to_i, params[:birth_day].to_i)
+
+    		if student.valid?
+				student.save
+			else
+				@err_message = "Invalid Data"
+			end
+		rescue
+     		@err_message = "#{$!}"
+		end
 	end
 
 	@student_list = Student.all

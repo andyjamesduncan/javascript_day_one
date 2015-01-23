@@ -22,5 +22,11 @@
         <% end %>
       </ul>
     <% end %>
+
+    <% if @err_message %>
+      <ul>
+          <li><h2><%= @err_message.to_s %></h2></li>
+      </ul>
+    <% end %>
   </body>
 </html>
