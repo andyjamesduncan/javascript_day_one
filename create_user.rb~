@@ -1,0 +1,9 @@
+require_relative 'shouter.rb'
+
+
+@user = User.new
+@user.name = 'Andy'
+@user.handle = 'andyjamesduncan'
+@user.password = @user.generate_unique_password
+
+@user.save

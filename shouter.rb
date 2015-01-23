@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 	validate :password_length
 
 	def generate_unique_password
-		(0...PASSWORD_LENGTH).map { (65 + rand(26)).chr }.join
+		(0...PASSWORD_LENGTH).map { (65 + rand(26)).chr }.join.downcase
 	end
 
 	private

@@ -1,0 +1,23 @@
+<html>
+  <body>
+    <p>
+      <h2>Please input a 'shout'...</h2>
+    </p>
+
+    <form action="/" method="get">
+<label>Your Password, Baby</label>
+      <input name="password" /><br>
+<label>Your Shout...</label>
+      <input name="shout" size="200" /><br>
+      <input type="submit" /><br>
+    </form><br>
+
+    <% if @shoutlist.any? %>
+      <ul>
+        <% @shoutlist.each do |shout| %>
+          <li><%= shout %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </body>
+</html>

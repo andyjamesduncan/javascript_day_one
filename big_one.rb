@@ -46,37 +46,82 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require_relative 'Student.rb'
+require_relative 'shouter.rb'
+require 'pp'
 
 set :port, 3000
 set :bind, '0.0.0.0'
 
-get '/' do
+get '/home' do
 
-	@err_message = nil
+	redirect '/'
 
-	unless(params[:password].nil?)
-		user = User.new
+end
 
-		# student.name = params[:name]
-		# student.surnames = params[:surnames]
-  		#   	student.website = params[:website]
-  		#   	student.number_of_dogs = params[:number_of_dogs]
+get '/handle/:handle' do
 
-  		#   	begin
-  		#   		student.birthday = Date.new(params[:birth_year].to_i, params[:birth_month].to_i, params[:birth_day].to_i)
+	@a_message = nil
+	@shoutlist = []
 
-  		#   		if student.valid?
-		# 		student.save
-		# 	else
-		# 		@err_message = "Invalid Data"
-		# 	end
-		# rescue
-  		#    		@err_message = "#{$!}"
-		# end
+	if(params[:handle].nil?)
+		@a_message = "No handle supplied"
+	else
+		@user = User.find_by handle: params[:handle]
+
+		if @user.nil?
+			@a_message = "Cannot find user with handle of " + params[:handle].to_s
+		else
+			@user.shouts.sort { |a, b| b.created_at <=> a.created_at }.each do |shout|
+				@shoutlist.push(	[	shout.user.name.to_s, 
+										shout.user.handle.to_s,
+										shout.message.to_s,
+										shout.created_at.strftime("%H:%M:%S").to_s,
+										shout.likes.to_s
+									]
+								)
+		end
 	end
 
-	# @student_list = Student.all
+
+	end
+
+	erb :handle_shout
+end
+
+get '/' do
+
+	@a_message = nil
+	@shoutlist = []
+
+	unless(params[:password].nil?)
+		
+		user = User.new
+
+		@user = User.find_by password: params[:password]
+
+		if @user.nil?
+			@a_message = "Cannot find user with that password of " + params[:password].to_s
+		else
+
+			@shout = Shout.new
+    		@shout.user = @user
+    		@shout.message = params[:shout]
+    		@shout.created_at = @shout.generate_created_at
+    		@shout.likes = @shout.initial_likes
+
+    		@shout.save
+		end
+	end
+
+	Shout.all.sort { |a, b| b.created_at <=> a.created_at }.each do |shout|
+		@shoutlist.push(	[	shout.user.name.to_s, 
+								shout.user.handle.to_s,
+								shout.message.to_s,
+								shout.created_at.strftime("%H:%M:%S").to_s,
+								shout.likes.to_s
+							]
+						)
+	end
 
 	erb :home_shout
 end

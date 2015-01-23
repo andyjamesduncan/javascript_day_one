@@ -3,13 +3,15 @@ require_relative 'shouter.rb'
 describe Shout do
   before do
 
-    puts "Starting Shout"
-
-  	@user = User.new
+    @user = User.new
   	@user.name = 'Sean'
   	@user.handle = 'seaniechaos'
   	@user.password = @user.generate_unique_password
 
+    # Need to save User to get user_id later, for shout object
+    # but RSPEC will delete from database later, when it rolls back
+    # after 'describe'
+    
     @user.save
 
     @shout = Shout.new
@@ -17,11 +19,6 @@ describe Shout do
     @shout.message = "A valid test message"
     @shout.created_at = @shout.generate_created_at
     @shout.likes = @shout.initial_likes
-
-    puts "Shout User ID   : " + @shout.user_id.to_s
-    puts "Shout Message   : " + @shout.message.to_s
-    puts "Shout Created At: " + @shout.created_at.to_s
-    puts "Shout Likes     : " + @shout.likes.to_s
 
   end
 
