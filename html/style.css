@@ -1,0 +1,7 @@
+*{
+	/* outline: 1px solid red; */
+}
+.picture img{
+	width: 400px;
+	height: auto;
+}
